@@ -1,6 +1,6 @@
 #include <atomic>
 
-#include "common.h"
+#include "../config.h"
 
 struct Mask{
     // hue range
