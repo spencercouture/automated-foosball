@@ -1,18 +1,16 @@
-#include <vector>
-
 #include "ImageProcessor.h"
-#include <iostream>
 
 // return nullptr if ball not found
-cv::Vec3f* ImageProcessor::detectBall(cv::Mat frame){
+std::vector<cv::Vec3f> ImageProcessor::detectBall(cv::Mat img, cv::Mat& hsv){
+    cv::Mat frame;
     // create scalars for color mask
     cv::Scalar lowScalar(mask.lowH, mask.lowS, mask.lowV);
     cv::Scalar highScalar(mask.highH, mask.highS, mask.highV);
 
     // resize frame
-    cv::resize(frame, frame, resizeValue);
+    //cv::resize(img, frame, resizeValue);
 
-    cv::cvtColor(frame, frame, cv::COLOR_BGR2HSV);
+    cv::cvtColor(img, frame, cv::COLOR_BGR2HSV);
     cv::inRange(frame, lowScalar, highScalar, frame);
 
     // blur, dilate, and erode image
@@ -20,14 +18,16 @@ cv::Vec3f* ImageProcessor::detectBall(cv::Mat frame){
     cv::dilate(frame, frame, 0);
     cv::erode(frame, frame, 0);
 
+    hsv = frame;
+
     // detect the circles
     std::vector<cv::Vec3f> circles; // circles found in the frame
     
-    cv::HoughCircles(frame, circles, cv::HOUGH_GRADIENT, 2, frame.rows / 3, 100,
-        20, ballRadiusMin, ballRadiusMax);
+    cv::HoughCircles(frame, circles, cv::HOUGH_GRADIENT, dpi, frame.rows / 5, 100,
+        threshVal, ballRadiusMin, ballRadiusMax);
 
     // if vector is empty, return nullptr
-    if( circles.size() == 0 ) return nullptr;
+//    if( circles.size() == 0 ) return nullptr;
 
-    return new cv::Vec3f(circles.at(0));
+    return circles;
 }

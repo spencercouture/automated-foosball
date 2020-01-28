@@ -11,6 +11,8 @@ bool CameraCapture::init(){
         if( camList.GetSize() < 1 ) return false;
 
         camera = camList.GetByIndex(0);
+	camera->Init();
+	camera->BeginAcquisition();
     }
     catch( Spinnaker::Exception e ){
         std::cout << "Spinnaker error: " << e.what();

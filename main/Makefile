@@ -2,7 +2,7 @@ FLAGS = -g
 GCC = g++
 INCLUDE = -I/usr/local/include/opencv4 -I/usr/include/spinnaker
 LIBS = -lopencv_core -lopencv_videoio -lopencv_highgui -lopencv_imgproc -l opencv_imgcodecs -lSpinnaker
-CPP_FILES = ImageProcessing/ImageProcessor.cpp
+CPP_FILES = ImageProcessing/ImageProcessor.cpp CameraCapture/CameraCapture.cpp
 
 all: main tests
 

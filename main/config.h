@@ -1,8 +1,8 @@
 // a place to declare program-wide values
 
 // amount to resize frames by
-#define resizeX 960
-#define resizeY 540
+#define resizeX 512
+#define resizeY 288
 
 // default values for mask
 #define default_lowH 0
@@ -13,5 +13,5 @@
 #define default_highV 234
 
 // size range of ball
-#define ballRadiusMin 8
+#define ballRadiusMin 2
 #define ballRadiusMax 18

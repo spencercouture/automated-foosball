@@ -1,3 +1,4 @@
+#include <vector>
 #include <opencv2/core/core.hpp>
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
@@ -14,12 +15,13 @@
 **/
 class ImageProcessor{
 private:
-    // the color mask
-    Mask mask;
-
 public:
     // amount to resize the frame to
     cv::Size resizeValue = cv::Size(resizeX, resizeY);
     // given a frame, find the ball
-    cv::Vec3f* detectBall(cv::Mat frame);
+    std::vector<cv::Vec3f> detectBall(cv::Mat img, cv::Mat& hsv);
+    // the color mask
+    Mask mask;
+    int threshVal = 20;
+    int dpi = 2;
 };
