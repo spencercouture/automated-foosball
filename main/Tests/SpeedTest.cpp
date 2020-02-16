@@ -23,7 +23,7 @@ void processImages( std::string filename ){
     cv::Mat frame;
     capture >> frame;
     while( !frame.empty() ){
-        proc.detectBall(frame);
+        //proc.detectBall(frame);
         capture >> frame;
     }
 }

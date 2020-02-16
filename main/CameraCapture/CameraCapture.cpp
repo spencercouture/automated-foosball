@@ -24,10 +24,20 @@ bool CameraCapture::init(){
 
 Spinnaker::ImagePtr CameraCapture::getNextImage(){
     if( !isInit ) return nullptr;
+    
 
     Spinnaker::ImagePtr img = camera->GetNextImage();
     if( img->IsIncomplete() ) return nullptr;
     img = img->Convert(Spinnaker::PixelFormat_BGR8, Spinnaker::NEAREST_NEIGHBOR);
+
+    std::chrono::time_point<std::chrono::high_resolution_clock> newTime = std::chrono::high_resolution_clock::now();
+    if( isCapturing )
+        captureDelta = std::chrono::duration_cast<std::chrono::microseconds>( newTime - lastCaptureTime);
+    else
+        isCapturing = true;
+    
+    lastCaptureTime = newTime;
+
     return img;
 }
 

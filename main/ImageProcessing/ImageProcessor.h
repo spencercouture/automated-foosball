@@ -22,6 +22,6 @@ public:
     std::vector<cv::Vec3f> detectBall(cv::Mat img, cv::Mat& hsv);
     // the color mask
     Mask mask;
-    int threshVal = 20;
-    int dpi = 2;
+    int threshVal = 15;
+    int dpi = 1;
 };
