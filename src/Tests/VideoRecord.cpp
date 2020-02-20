@@ -23,8 +23,8 @@ int main(){
 
     cv::Mat frame;
 
-    cv::VideoWriter writer("output.mp4", 
-        cv::VideoWriter::fourcc('M','P','4','V'), 60, cv::Size(512, 288));
+    cv::VideoWriter writer("output.avi", 
+        cv::VideoWriter::fourcc('M','P','E','G'), 60, cv::Size(512, 288));
 
     bool recording = false;
 
@@ -44,7 +44,7 @@ int main(){
         cv::Mat displayFrame = frame.clone();
 
         if( recording ){
-            cv::circle(displayFrame, cv::Point(25, 25), 8, cv::Scalar(255, 0, 0), cv::FILLED);
+            cv::circle(displayFrame, cv::Point(25, 25), 8, cv::Scalar(0, 0, 255), cv::FILLED);
             writer.write(frame);
         }
 
