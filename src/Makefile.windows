@@ -1,0 +1,15 @@
+FLAGS = -g -LC:\OpenCV\Build\install\x64\mingw\lib
+GCC = g++
+INCLUDE = -IC:\OpenCV\Build\install\include
+LIBS = -lopencv_core420 -lopencv_videoio420 -lopencv_highgui420 -lopencv_imgproc420 -lopencv_imgcodecs420 -lopencv_video420
+CPP_FILES = ImageProcessing/ImageProcessor.cpp
+TARGETS = kalman
+
+
+all: ${TARGETS}
+
+clean:
+	rm -f ${TARGETS}
+
+kalman: ${CPP_FILES} Tests/KalmanTest.cpp
+	${GCC} Tests/KalmanTest.cpp ${CPP_FILES} ${FLAGS} ${INCLUDE} ${LIBS} -o kalman
