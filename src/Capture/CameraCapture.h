@@ -1,10 +1,12 @@
 #include <spinnaker/Spinnaker.h>
 #include <chrono> 
+#include "Capture.h"
 
-class CameraCapture{
+class CameraCapture: Capture{
 public:
+    CameraCapture();
     bool init();
-    Spinnaker::ImagePtr getNextImage();
+    cv::Mat* nextFrame();
     ~CameraCapture();
     Spinnaker::CameraPtr camera;
     std::chrono::microseconds captureDelta;

@@ -1,3 +1,4 @@
+#include "Capture.h"
 #include "CameraCapture.h"
 
 bool CameraCapture::init(){
@@ -22,7 +23,7 @@ bool CameraCapture::init(){
     return true;
 }
 
-Spinnaker::ImagePtr CameraCapture::getNextImage(){
+cv::Mat* CameraCapture::nextFrame(){
     if( !isInit ) return nullptr;
     
 
@@ -38,7 +39,7 @@ Spinnaker::ImagePtr CameraCapture::getNextImage(){
     
     lastCaptureTime = newTime;
 
-    return img;
+    return nullptr;
 }
 
 CameraCapture::~CameraCapture(){
