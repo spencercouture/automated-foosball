@@ -6,6 +6,8 @@
 #include <opencv2/highgui/highgui.hpp>
 #include <opencv2/imgproc/imgproc.hpp>
 #include <opencv2/videoio.hpp>
+#include <algorithm> 
+#include <chrono> 
 #include "../ImageProcessing/ImageProcessor.h"
 
 bool read = false;
@@ -63,7 +65,9 @@ int main( int argc, char** argv ){
     char keyCode = 0;
 
     cv::Mat frame, hsv;
-    for( cap >> frame; !frame.empty() && keyCode != 27; keyCode = cv::waitKey(fps) ){
+    cap >> frame;
+    auto start = std::chrono::high_resolution_clock::now(); 
+    while( !frame.empty() && keyCode != 2 ){
     
         cv::resize(frame, frame, cv::Size(512, 288));
 
@@ -81,14 +85,17 @@ int main( int argc, char** argv ){
             if( balls.size() > 0 ){
                 cv::Vec3f ball = balls.at(0);
                 cv::circle(frame, cv::Point((int)(ball)[0], (int)(ball)[1]), (int)(ball)[2], cv::Scalar(0, 0, 255), 3);
-                
-                if( write ) outfile << ball[0] << "\t" << ball[1] << "\t" << ball[2] << std::endl;
+                auto end = std::chrono::high_resolution_clock::now();
+                auto duration = std::chrono::duration_cast<std::chrono::microseconds>(end - start); 
+                if( write ) outfile << ball[0] << "\t" << ball[1] << "\t" << ball[2] << "\t" << duration.count() << std::endl;
+                start = std::chrono::high_resolution_clock::now();
             }
-            else if( write ) outfile << "-1\t-1\t-1" << std::endl;
+            //else if( write ) outfile << "-1\t-1\t-1\t-1" << std::endl;
         }
 
         cv::imshow("main", frame);
         cap >> frame;
+        keyCode = cv::waitKey(fps);
     }
 
     if( write ) outfile.close();

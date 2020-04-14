@@ -25,3 +25,5 @@ spinnakertest: ${CPP_FILES}
 videorecord: ${CPP_FILES}
 	${GCC} Tests/VideoRecord.cpp ${CPP_FILES} ${FLAGS} ${INCLUDE} ${LIBS} -o videorecord
 
+kalmantest: ${CPP_FILES}
+	${GCC} Tests/KalmanTest.cpp ${CPP_FILES} ${FLAGS} ${INCLUDE} ${LIBS} -o kalman.o
