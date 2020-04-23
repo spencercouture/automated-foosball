@@ -1,6 +1,9 @@
 #include "Capture.h"
 #include "CameraCapture.h"
 
+// do nothing
+void CameraCapture::reset(){}
+
 bool CameraCapture::init(){
     try{
         // intialize the system

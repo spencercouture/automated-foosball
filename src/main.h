@@ -1,4 +1,5 @@
 #include <iostream>
+#include <math.h>
 #include <opencv2/video/tracking.hpp>
 #include "Capture/FileCapture.h"
 #include "ImageProcessing/ImageProcessor.h"
@@ -18,14 +19,23 @@ public:
     void processLoop();
 private:
     void processKeypress(char keycode);
+    void drawArrow(cv::Vec3f ball, cv::Mat* frame);
 
     Capture* capture;
     ImageProcessor imgProc;
+    
     const char* vidWindow = "vidWindow";
     const char* maskWindow = "maskWindow";
     const char* controlWindow = "controlWindow";
+
+    cv::Vec3f lastLoc;
+    bool foundBall = false;
+    int arrowLength = 40;
+    int arrowThickness = 3;
+
     bool useKalman = false;
     bool trackBall = true;
     double playbackSpeed = 1.0;
-    bool paused = false;
+    int play = 0;
+    int loop = 1;
 };

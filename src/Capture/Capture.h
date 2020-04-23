@@ -8,5 +8,6 @@
 class Capture{
 public:
     virtual cv::Mat* nextFrame() = 0;
+    virtual void reset() = 0; // used for file captures mainly
     double waittime; // time until next frame: 0 for live footage, fps for file
 };

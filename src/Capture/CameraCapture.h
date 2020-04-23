@@ -7,6 +7,7 @@ public:
     CameraCapture();
     bool init();
     cv::Mat* nextFrame();
+    void reset();
     ~CameraCapture();
     Spinnaker::CameraPtr camera;
     std::chrono::microseconds captureDelta;
