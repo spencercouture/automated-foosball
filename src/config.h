@@ -6,12 +6,12 @@
 
 // default values for mask
 #define default_lowH 0
-#define default_highH 12
-#define default_lowS 89
-#define default_highS 138
-#define default_lowV 134
-#define default_highV 234
+#define default_highH 15
+#define default_lowS 58
+#define default_highS 139
+#define default_lowV 104
+#define default_highV 223
 
 // size range of ball
-#define ballRadiusMin 2
-#define ballRadiusMax 18
+#define ballRadiusMin 10
+#define ballRadiusMax 20

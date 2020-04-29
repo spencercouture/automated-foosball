@@ -7,18 +7,20 @@ Main::Main(Capture* cap) {
     cv::namedWindow(vidWindow, cv::WINDOW_NORMAL);
     cv::namedWindow(maskWindow, cv::WINDOW_NORMAL);
     cv::namedWindow(controlWindow, cv::WINDOW_NORMAL);
-    cv::resizeWindow(controlWindow, cv::Size(700,400));
+    cv::namedWindow(maskControlWindow, cv::WINDOW_NORMAL);
+    cv::resizeWindow(maskControlWindow, cv::Size(300,200));
+    cv::resizeWindow(controlWindow, cv::Size(300,75));
 
 
     // setup trackbars
     cv::createTrackbar("Play", controlWindow, &play, 1);
     cv::createTrackbar("Loop", controlWindow, &loop, 1);
-    cv::createTrackbar("Low Hue", controlWindow, &imgProc.mask.lowH, 179);
-    cv::createTrackbar("High Hue", controlWindow, &imgProc.mask.highH, 179);
-    cv::createTrackbar("Low Saturation", controlWindow, &imgProc.mask.lowS, 255);
-    cv::createTrackbar("High Saturation", controlWindow, &imgProc.mask.highS, 255);
-    cv::createTrackbar("Low Value", controlWindow, &imgProc.mask.lowV, 255);
-    cv::createTrackbar("High Value", controlWindow, &imgProc.mask.highV, 255);    
+    cv::createTrackbar("Low Hue", maskControlWindow, &imgProc.mask.lowH, 179);
+    cv::createTrackbar("High Hue", maskControlWindow, &imgProc.mask.highH, 179);
+    cv::createTrackbar("Low Sat.", maskControlWindow, &imgProc.mask.lowS, 255);
+    cv::createTrackbar("High Sat.", maskControlWindow, &imgProc.mask.highS, 255);
+    cv::createTrackbar("Low Val.", maskControlWindow, &imgProc.mask.lowV, 255);
+    cv::createTrackbar("High Val.", maskControlWindow, &imgProc.mask.highV, 255);    
 };
 
 // helper to draw the arrowed line for the direction of the ball
@@ -30,6 +32,9 @@ void Main::drawArrow(cv::Vec3f ball, cv::Mat* frame){
 
     // if both are 0, just quit--no change
     if( dx == 0 && dy == 0 ) return;
+
+    //std::cout << sqrt(dx*dx + dy*dy) << std::endl;
+    if( sqrt(dx*dx + dy*dy) < 5 ) return;
 
     // if one is zero, then either perfectly horizontal or vertical
     if( dx == 0 ){
@@ -53,7 +58,7 @@ void Main::drawArrow(cv::Vec3f ball, cv::Mat* frame){
     std::cout << "nx: " << nx << "\nny: " << ny << std::endl;
     std::cout << "------------------\n";*/
 
-    cv::arrowedLine(*frame, cv::Point(ball[0], ball[1]), cv::Point(nx, ny), cv::Scalar(0, 0, 255), arrowThickness);
+    cv::arrowedLine(*frame, cv::Point(ball[0], ball[1]), cv::Point(nx, ny), cv::Scalar(255, 0, 0), arrowThickness);
 }
 
 void Main::processLoop(){
@@ -111,7 +116,8 @@ int main(int argc, char** argv){
     // setup file or camera capture
     if( argc > 1 && !HAS_SPINNAKER_CAMERA ){
         try{
-            capture = new FileCapture(argv[1]);
+            // checks if fps was supplied
+            capture = (argc > 2) ? new FileCapture(argv[1], atoi(argv[2])) : new FileCapture(argv[1]);
         }
         catch(const char* err){
             std::cerr << "Error intializing FileCapture with '" << argv[1]

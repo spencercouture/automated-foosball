@@ -2,7 +2,7 @@
 
 class FileCapture: public Capture{
 public:
-    FileCapture(char* filename);
+    FileCapture(char* filename, int fps = -1);
     cv::Mat* nextFrame();
     void reset();
 private:

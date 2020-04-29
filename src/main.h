@@ -1,5 +1,6 @@
 #include <iostream>
 #include <math.h>
+#include <stdlib.h> 
 #include <opencv2/video/tracking.hpp>
 #include "Capture/FileCapture.h"
 #include "ImageProcessing/ImageProcessor.h"
@@ -27,11 +28,12 @@ private:
     const char* vidWindow = "vidWindow";
     const char* maskWindow = "maskWindow";
     const char* controlWindow = "controlWindow";
+    const char* maskControlWindow = "maskControlWindow";
 
     cv::Vec3f lastLoc;
     bool foundBall = false;
-    int arrowLength = 40;
-    int arrowThickness = 3;
+    int arrowLength = 75;
+    int arrowThickness = 4;
 
     bool useKalman = false;
     bool trackBall = true;

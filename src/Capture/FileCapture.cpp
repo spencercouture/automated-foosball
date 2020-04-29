@@ -1,7 +1,8 @@
 #include "FileCapture.h"
+#include <iostream>
 
 // open the file and create a capture object
-FileCapture::FileCapture(char* filename){
+FileCapture::FileCapture(char* filename, int fps){
     _filename = filename;
     // create capture
     capture = cv::VideoCapture(_filename);
@@ -9,7 +10,10 @@ FileCapture::FileCapture(char* filename){
     if( !capture.isOpened() ) throw "could not open file for capture";
     
     // determine fps
-    waittime = (1000)/capture.get(cv::CAP_PROP_FPS);
+    double realfps = (fps != -1) ? fps : capture.get(cv::CAP_PROP_FPS);
+    waittime = (1000)/realfps;
+    std::cout << "detected FPS of " << realfps << std::endl;
+    std::cout << "calculated waittime of " << waittime << std::endl;
 }
 
 cv::Mat* FileCapture::nextFrame(){
