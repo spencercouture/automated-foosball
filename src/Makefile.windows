@@ -1,12 +1,15 @@
 FLAGS = -g -LC:\OpenCV\Build\install\x64\mingw\lib
+CAMERA_FLAG = -DHAS_SPINNAKER_CAMERA=1
 GCC = g++
 INCLUDE = -IC:\OpenCV\Build\install\include
 LIBS = -lopencv_core420 -lopencv_videoio420 -lopencv_highgui420 -lopencv_imgproc420 -lopencv_imgcodecs420 -lopencv_video420
 CPP_FILES = ImageProcessing/ImageProcessor.cpp
 TARGETS = kalman
 
-
 all: ${TARGETS}
+
+no-camera: main.cpp Capture/FileCapture.cpp 
+	${GCC} -DHAS_SPINNAKER_CAMERA=0 main.cpp Capture/FileCapture.cpp ImageProcessing/ImageProcessor.cpp ${FLAGS} ${INCLUDE} ${LIBS} -o main
 
 clean:
 	rm -f ${TARGETS}

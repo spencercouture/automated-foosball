@@ -8,7 +8,7 @@ std::vector<cv::Vec3f> ImageProcessor::detectBall(cv::Mat img, cv::Mat& hsv){
     cv::Scalar highScalar(mask.highH, mask.highS, mask.highV);
 
     // resize frame
-    //cv::resize(img, frame, resizeValue);
+    cv::resize(img, frame, resizeValue);
 
     cv::cvtColor(img, frame, cv::COLOR_BGR2HSV);
     cv::inRange(frame, lowScalar, highScalar, frame);
@@ -25,9 +25,6 @@ std::vector<cv::Vec3f> ImageProcessor::detectBall(cv::Mat img, cv::Mat& hsv){
     
     cv::HoughCircles(frame, circles, cv::HOUGH_GRADIENT, dpi, frame.rows / 5, 100,
         threshVal, ballRadiusMin, ballRadiusMax);
-
-    // if vector is empty, return nullptr
-//    if( circles.size() == 0 ) return nullptr;
 
     return circles;
 }
